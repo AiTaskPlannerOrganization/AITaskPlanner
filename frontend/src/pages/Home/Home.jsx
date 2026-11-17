@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { apiClient } from '../../api/client';
+import { apiClient, API_BASE_URL } from '../../api/client';
 import styles from './Home.module.css';
 
 export function Home() {
@@ -24,8 +24,6 @@ export function Home() {
     }
   };
 
-  const configuredApiUrl = import.meta.env.VITE_API_URL;
-
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
@@ -44,9 +42,10 @@ export function Home() {
           <button
             type="button"
             className={styles.primaryButton}
-            onClick={() => alert('Функціонал створення плану буде реалізовано в наступних етапах!')}
+            disabled
+            title="Буде реалізовано на наступних етапах"
           >
-            Створити план задачі
+            Створити план задачі (скоро)
           </button>
           <a
             href="https://github.com/AiTaskPlannerOrganization/AITaskPlanner"
@@ -87,18 +86,23 @@ export function Home() {
 
       <section className={styles.apiCheckCard}>
         <div className={styles.apiHeader}>
-          <h3 className={styles.apiTitle}>Перевірка зв'язку з бекендом</h3>
+          <h2 className={styles.apiTitle}>Перевірка зв'язку з бекендом</h2>
           <span className={styles.statusIndicator}>
-            Proxy: /api → http://localhost:3000
-            {configuredApiUrl ? ` | VITE_API_URL: ${configuredApiUrl}` : ''}
+            {API_BASE_URL ? `API: ${API_BASE_URL}` : 'API: відносний /api'}
           </span>
         </div>
         <p className={styles.featureDescription}>
-          Запити за замовчуванням виконуються відносно через Vite proxy (ціль: <code>http://localhost:3000</code>).
-          {configuredApiUrl ? (
-            <> Встановлено кастомний <code>VITE_API_URL={configuredApiUrl}</code>.</>
+          {API_BASE_URL ? (
+            <>
+              Запити йдуть напряму на <code>{API_BASE_URL}</code> (задано через{' '}
+              <code>VITE_API_URL</code>).
+            </>
           ) : (
-            <> Змінну <code>VITE_API_URL</code> залишено порожньою для локальної розробки без CORS.</>
+            <>
+              <code>VITE_API_URL</code> порожня: запити йдуть на відносний <code>/api</code>, а в
+              режимі розробки Vite proxy перенаправляє їх на бекенд (ціль — у{' '}
+              <code>vite.config.js</code>).
+            </>
           )}
         </p>
         <div className={styles.actions}>

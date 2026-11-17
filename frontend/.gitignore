@@ -20,9 +20,7 @@ dist-ssr
 .env.*.local
 !.env.example
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+# Editor directories and files (.vscode is ignored in the root .gitignore)
 .idea
 .DS_Store
 *.suo

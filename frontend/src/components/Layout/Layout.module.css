@@ -51,6 +51,7 @@
 }
 
 .badge {
+  white-space: nowrap;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   padding-block: var(--space-1);
@@ -130,4 +131,10 @@
 
 .footerLink:hover {
   color: var(--color-text-primary);
+}
+
+@media (max-width: 480px) {
+  .badge {
+    display: none;
+  }
 }

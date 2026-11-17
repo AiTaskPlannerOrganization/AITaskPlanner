@@ -3,7 +3,11 @@
  * Using CSS Cascade Layers and logical properties
  */
 
-@layer reset, base, components, utilities;
+/*
+ * Global styles live in two layers. Component styles (*.module.css) are unlayered,
+ * so they always override reset/base without fighting over specificity.
+ */
+@layer reset, base;
 
 @layer reset {
   :where(*, *::before, *::after) {

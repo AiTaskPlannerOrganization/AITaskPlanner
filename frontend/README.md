@@ -111,6 +111,16 @@ frontend/
   - Заповнювати значенням (наприклад, `VITE_API_URL=http://localhost:3000` або адресою віддаленого сервера) потрібно лише за необхідності прямого звернення або у виробничому середовищі.
 - **Vite Proxy:**  
   У файлі `vite.config.js` налаштовано секцію `server.proxy` для маршруту `/api` на ціль `http://localhost:3000`. Точний порт та маршрути буде узгоджено з бекенд-розробником команди.
+- **Клієнт `src/api/client.js`:**
+  ```js
+  import { apiClient } from '../api/client';
+
+  const health = await apiClient('/api/health');                          // GET
+  const task = await apiClient('/api/tasks', { method: 'POST', body: { title: 'Нова задача' } });
+  ```
+  - звичайний об'єкт у `body` автоматично серіалізується в JSON із заголовком `Content-Type: application/json`; `FormData`/`Blob` передаються як є;
+  - відповідь: JSON → об'єкт, порожнє тіло → `null`, інший тип → текст;
+  - статус не 2xx → виняток `Error` з полями `status` і `data` (повідомлення береться з `data.message`, якщо бекенд його повертає).
 
 ---
 
@@ -144,7 +154,7 @@ frontend/
 - **Радіуси:** `var(--radius-sm)`, `var(--radius-md)`, `var(--radius-lg)`, `var(--radius-full)`.
 
 ### 3. Базові та скидальні стилі
-У `src/styles/global.css` застосовано систему каскадних шарів `@layer reset, base, components, utilities;`, що запобігає конфліктам специфічності та забезпечує передбачуваність стилів.
+У `src/styles/global.css` глобальні стилі розкладено у два каскадні шари: `@layer reset, base;`. Стилі компонентів (`*.module.css`) пишуться **без** `@layer` — нешаровані правила завжди мають пріоритет над шарами, тож компонент гарантовано перекриває reset/base незалежно від специфічності селекторів.
 
 ---
 

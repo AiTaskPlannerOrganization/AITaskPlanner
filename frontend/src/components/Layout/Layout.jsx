@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './Layout.module.css';
 
+const navLinkClass = ({ isActive }) =>
+  isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink;
+
 export function Layout() {
   return (
     <div className={styles.layout}>
@@ -11,23 +14,9 @@ export function Layout() {
             <span className={styles.brandTitle}>AITaskPlanner</span>
             <span className={styles.badge}>v0.1.0-alpha</span>
           </div>
-          <nav className={styles.nav} aria-label="Main Navigation">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
-              }
-              end
-            >
+          <nav className={styles.nav} aria-label="Головна навігація">
+            <NavLink to="/" className={navLinkClass} end>
               Головна
-            </NavLink>
-            <NavLink
-              to="/tasks"
-              className={({ isActive }) =>
-                isActive ? `${styles.navLink} ${styles.navLinkActive}` : styles.navLink
-              }
-            >
-              Задачі (404 тест)
             </NavLink>
           </nav>
         </div>
