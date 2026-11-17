@@ -24,6 +24,8 @@ export function Home() {
     }
   };
 
+  const configuredApiUrl = import.meta.env.VITE_API_URL;
+
   return (
     <div className={styles.container}>
       <section className={styles.hero}>
@@ -62,7 +64,7 @@ export function Home() {
           <span className={styles.featureIcon}>⚡</span>
           <h2 className={styles.featureTitle}>React + Vite</h2>
           <p className={styles.featureDescription}>
-            Сучасна та надшвидка збірка за допомогою Vite 6 із підтримкою React 19 та HMR.
+            Сучасна та надшвидка збірка за допомогою Vite 8 із підтримкою React 19 та HMR.
           </p>
         </article>
 
@@ -87,12 +89,17 @@ export function Home() {
         <div className={styles.apiHeader}>
           <h3 className={styles.apiTitle}>Перевірка зв'язку з бекендом</h3>
           <span className={styles.statusIndicator}>
-            Proxy: /api → {import.meta.env.VITE_API_URL || 'http://localhost:3000'}
+            Proxy: /api → http://localhost:3000
+            {configuredApiUrl ? ` | VITE_API_URL: ${configuredApiUrl}` : ''}
           </span>
         </div>
         <p className={styles.featureDescription}>
-          Клієнт налаштований у <code>src/api/client.js</code> із використанням змінної оточення{' '}
-          <code>VITE_API_URL</code>.
+          Запити за замовчуванням виконуються відносно через Vite proxy (ціль: <code>http://localhost:3000</code>).
+          {configuredApiUrl ? (
+            <> Встановлено кастомний <code>VITE_API_URL={configuredApiUrl}</code>.</>
+          ) : (
+            <> Змінну <code>VITE_API_URL</code> залишено порожньою для локальної розробки без CORS.</>
+          )}
         </p>
         <div className={styles.actions}>
           <button
