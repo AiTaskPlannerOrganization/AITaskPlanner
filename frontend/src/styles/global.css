@@ -10,21 +10,23 @@
 @layer reset, base;
 
 @layer reset {
-  :where(*, *::before, *::after) {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
   :where(html) {
-    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     tab-size: 4;
   }
 
   :where(body) {
     min-block-size: 100dvb;
     line-height: var(--line-height-normal);
-    text-rendering: optimizeSpeed;
+    text-rendering: optimizespeed;
     -webkit-font-smoothing: antialiased;
   }
 

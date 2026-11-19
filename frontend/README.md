@@ -60,6 +60,8 @@ npm -v
 | `npm run build` | Оптимізована компіляція проєкту для продакшну в каталог `dist/` |
 | `npm run preview` | Локальний запуск та перегляд зібраного production-бандлу з `dist/` |
 | `npm run lint` | Перевірка коду за допомогою ESLint |
+| `npm run lint:css` | Перевірка CSS-файлів за допомогою Stylelint |
+| `npm run lint:css:fix` | Автоматичне виправлення помилок Stylelint, де це можливо |
 
 > **Примітка щодо вихідної папки збірки:**  
 > Папка `dist/` додана до `.gitignore` (у `frontend/.gitignore`) і не потрапляє у систему контролю версій.
@@ -72,6 +74,7 @@ npm -v
 frontend/
 ├── .env.example              # Шаблон конфігурації змінних оточення
 ├── .gitignore                # Ігнорування node_modules, dist, .env тощо
+├── .stylelintrc.json         # Конфігурація Stylelint для CSS Modules
 ├── eslint.config.js          # Базова конфігурація ESLint
 ├── index.html                # Вхідна HTML-сторінка застосунку
 ├── package.json              # Залежності, engines та npm-скрипти
@@ -160,7 +163,24 @@ frontend/
 
 ## ⚙️ Лінтери та форматування
 
-У поточному каркасі збережено стандартну конфігурацію ESLint (`eslint.config.js`), згенеровану Vite:
-- Перевірка запуску: `npm run lint`
+У проєкті використовуються два лінтери.
 
-> **Зверніть увагу:** Повне налаштування командних правил лінтерів, сумісності правил із бекендом та конфігурація Stylelint є предметом окремих задач (#11 та #12) і виконується відповідальним членом команди.
+### ESLint (JavaScript / JSX)
+- Конфігурація: `eslint.config.js` (flat config, правила для React Hooks та React Refresh).
+- Перевірка: `npm run lint`
+
+### Stylelint (CSS)
+- Конфігурація: `.stylelintrc.json` на базі `stylelint-config-standard`, адаптована під CSS Modules.
+- Перевірка: `npm run lint:css`
+- Автовиправлення: `npm run lint:css:fix`
+
+Відхилення від стандартних правил Stylelint:
+
+| Правило | Значення | Причина |
+| :--- | :--- | :--- |
+| `selector-class-pattern` | вимкнено | у CSS Modules назви класів пишуться в `camelCase` |
+| `no-descending-specificity` | вимкнено | стани кнопок (`:hover:not(:disabled)`, `:disabled`) не конфліктують між собою |
+| `selector-pseudo-class-no-unknown` | дозволено `:global`, `:local` | спеціальні псевдокласи CSS Modules |
+| `property-no-unknown` | дозволено `composes` | властивість CSS Modules |
+
+Перед комітом рекомендується запускати `npm run lint` і `npm run lint:css`.
