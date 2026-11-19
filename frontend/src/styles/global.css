@@ -1,0 +1,85 @@
+/**
+ * Global CSS & Modern Reset for AITaskPlanner
+ * Using CSS Cascade Layers and logical properties
+ */
+
+/*
+ * Global styles live in two layers. Component styles (*.module.css) are unlayered,
+ * so they always override reset/base without fighting over specificity.
+ */
+@layer reset, base;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :where(html) {
+    text-size-adjust: 100%;
+    tab-size: 4;
+  }
+
+  :where(body) {
+    min-block-size: 100dvb;
+    line-height: var(--line-height-normal);
+    text-rendering: optimizespeed;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :where(img, picture, svg, video, canvas) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  :where(input, button, textarea, select) {
+    font: inherit;
+    color: inherit;
+  }
+
+  :where(button) {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+  }
+
+  :where(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :where(ul, ol) {
+    list-style: none;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-app);
+    overflow-y: scroll;
+  }
+
+  /* Accessibility: focus ring */
+  :focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: var(--line-height-tight);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  code, kbd, samp, pre {
+    font-family: var(--font-family-mono);
+    font-size: 0.9em;
+  }
+}
